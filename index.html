@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURAK YILDIRIM | Futuristic Game Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+        :root {
+            --neon-blue: #0c00af;
+            --neon-pink: #6f00ff;
+            --dark-space: #0a0a1a;
+            --deep-space: #050510;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--deep-space);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        .neon-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .neon-text {
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+        }
+
+        .neon-border {
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+        }
+
+        .neon-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .neon-button:hover {
+            box-shadow: 0 0 15px var(--neon-blue), 0 0 25px var(--neon-blue);
+            transform: translateY(-2px);
+        }
+
+        .neon-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 247, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .neon-button:hover::before {
+            left: 100%;
+        }
+
+        .glow {
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+            }
+
+            to {
+                box-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue);
+            }
+        }
+
+        .pixel-grid {
+            background-image:
+                linear-gradient(rgba(0, 247, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 247, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .game-card {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+
+        .terminal {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+            font-family: 'Courier New', monospace;
+        }
+
+        .terminal-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .cyber-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+        }
+    </style>
+</head>
+
+<body class="pixel-grid">
+    <!-- Floating Particles Background -->
+    <div id="particles-js" class="fixed inset-0 -z-10 opacity-20"></div>
+
+
+
+    <!-- Navigation -->
+
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-filter backdrop-blur-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full neon-border glow flex items-center justify-center overflow-hidden">
+                    <img src="ChatGPT Image Apr 5, 2025, 03_19_21 AM.png" alt="Burak Yıldırım"
+                        class="w-full h-full object-cover">
+                </div>
+                <span class="text-xl neon-text">BURAK YILDIRIM</span>
+            </div>
+
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="neon-text hover:text-neon-blue transition">Home</a>
+                <a href="#projects" class="neon-text hover:text-neon-blue transition">Projects</a>
+                <a href="#skills" class="neon-text hover:text-neon-blue transition">Skills</a>
+                <a href="#about" class="neon-text hover:text-neon-blue transition">About</a>
+                <a href="#contact" class="neon-text hover:text-neon-blue transition">Contact</a>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-90 px-6 py-4">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="neon-text hover:text-neon-blue transition">Home</a>
+                <a href="#projects" class="neon-text hover:text-neon-blue transition">Projects</a>
+                <a href="#skills" class="neon-text hover:text-neon-blue transition">Skills</a>
+                <a href="#about" class="neon-text hover:text-neon-blue transition">About</a>
+                <a href="#contact" class="neon-text hover:text-neon-blue transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Scroll ile kontrol edilen video -->
+
+
+        <!-- Siyah degrade overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-80 z-10"></div>
+
+        <!-- İçerik -->
+        <div class="container mx-auto px-6 py-20 z-20 text-center">
+            <div class="mb-8">
+                <div class="w-32 h-32 neon-border rounded-full mx-auto glow flex items-center justify-center mb-6">
+                    <img src="ChatGPT Image Apr 5, 2025, 03_19_21 AM.png" alt="Burak Yıldırım"
+                        class="w-full h-full object-cover" style="border-radius: 100%;">
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-4 neon-text">BURAK YILDIRIM</h1>
+                <div class="cyber-line w-1/2 mx-auto my-6"></div>
+                <h2 class="text-2xl md:text-3xl mb-6 neon-text">GAME DEVELOPER & DIGITAL WORLD BUILDER</h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">Crafting immersive gaming experiences with cutting-edge
+                    technology and innovative design.</p>
+            </div>
+
+            <div class="flex justify-center space-x-6 mt-12">
+                <a href="#projects"
+                    class="neon-button px-8 py-3 rounded-full bg-transparent neon-border text-white font-bold">VIEW
+                    WORK</a>
+                <a href="#contact"
+                    class="neon-button px-8 py-3 rounded-full bg-neon-blue bg-opacity-20 text-white font-bold">CONTACT
+                    ME</a>
+            </div>
+
+            <div class="mt-20 animate-bounce">
+                <a href="#projects" class="text-white">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating elements -->
+    <div class="absolute top-1/4 left-1/4 w-8 h-8 rounded-full bg-neon-blue opacity-30 blur-md"></div>
+    <div class="absolute top-1/3 right-1/4 w-12 h-12 rounded-full bg-neon-pink opacity-30 blur-md"></div>
+    <div class="absolute bottom-1/4 left-1/3 w-6 h-6 rounded-full bg-neon-blue opacity-40 blur-md"></div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-black bg-opacity-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-4 neon-text text-center">GAME PROJECTS</h2>
+            <p class="text-xl text-center mb-16 max-w-3xl mx-auto">Explore my portfolio of cutting-edge game development
+                projects that push the boundaries of interactive entertainment.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Project 1 -->
+                <div class="game-card">
+                    <div
+                        class="bg-gray-900 rounded-lg overflow-hidden neon-border h-full transform transition hover:shadow-xl hover:shadow-neon-blue/20">
+                        <!-- Adding a background image here -->
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('Screenshot_76.png');">
+                            <div class="absolute inset-0 bg-black opacity-30"></div>
+                            <h3 class="text-2xl font-bold z-10 neon-text">HORROR GAME</h3>
+                            <div
+                                class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-neon-blue to-neon-pink">
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">Nebula Runner</h3>
+                                <span class="px-3 py-1 bg-neon-blue bg-opacity-20 text-xs rounded-full">PC</span>
+                            </div>
+                            <p class="text-gray-300 mb-4">A group of guests trapped in a hotel encounter mysterious
+                                secrets and terrifying events around every corner...</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">Unreal Engine</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">C++</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">PC</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">HDRP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Project 2 -->
+                <div class="game-card">
+                    <div
+                        class="bg-gray-900 rounded-lg overflow-hidden neon-border h-full transform transition hover:shadow-xl hover:shadow-neon-blue/20">
+                        <!-- Adding a background image here -->
+                        <div class="h-48 bg-cover bg-center"
+                            style="background-image: url('Mount_Kalaga_National_Park_04.jpg');">
+                            <div class="absolute inset-0 bg-black opacity-30"></div>
+                            <h3 class="text-2xl font-bold z-10 neon-text">RPG GAME</h3>
+                            <div
+                                class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-neon-blue to-neon-pink">
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">COMING SOON...</h3>
+                                <span class="px-3 py-1 bg-neon-blue bg-opacity-20 text-xs rounded-full">PC</span>
+                            </div>
+                            <p class="text-gray-300 mb-4"></p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">Unreal Engine</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">C++</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">PC</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">HDRP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="game-card">
+                    <div
+                        class="bg-gray-900 rounded-lg overflow-hidden neon-border h-full transform transition hover:shadow-xl hover:shadow-neon-blue/20">
+                        <!-- Adding a background image here -->
+                        <div class="h-48 bg-cover bg-center"
+                            style="background-image: url('Mount_Kalaga_National_Park_04.jpg');">
+                            <div class="absolute inset-0 bg-black opacity-30"></div>
+                            <h3 class="text-2xl font-bold z-10 neon-text">FPS GAME</h3>
+                            <div
+                                class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-neon-blue to-neon-pink">
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">COMING SOON...</h3>
+                                <span class="px-3 py-1 bg-neon-blue bg-opacity-20 text-xs rounded-full">PC</span>
+                            </div>
+                            <p class="text-gray-300 mb-4"></p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">Unreal Engine</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">C++</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">PC</span>
+                                <span class="px-2 py-1 bg-gray-800 text-xs rounded">HDRP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-16">
+                    <a href="#"
+                        class="neon-button inline-block px-8 py-3 rounded-full bg-transparent neon-border text-white font-bold">
+                        VIEW ALL PROJECTS <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-black bg-opacity-30 parallax"
+        style="background-image: url('https://i.ytimg.com/vi/vRkuoHciFMw/maxresdefault.jpg'); height: 900px;">
+        <div class="container mx-auto px-16">
+            <h2 class="text-4xl font-bold mb-4 neon-text text-center">TECHNICAL SKILLS</h2>
+            <p class="text-xl text-center mb-16 max-w-3xl mx-auto">Mastering the tools and technologies that bring
+                virtual worlds to life.</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <!-- Skill 1 -->
+
+
+                <!-- Skill 2 -->
+                <div class="bg-black bg-opacity-70 rounded-lg p-6 text-center neon-border hover:glow transition"
+                    style="height: 300px;">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-gamepad text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Unreal Engine</h3>
+                    <div class="h-2 bg-gray-800 rounded-full mb-2">
+                        <div class="h-2 bg-neon-blue rounded-full" style="width: 85%"></div>
+                    </div>
+                    <p class="text-sm text-gray-300">2+ years experience</p>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="bg-black bg-opacity-70 rounded-lg p-6 text-center neon-border hover:glow transition">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fab fa-cuttlefish text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">C++ Programming</h3>
+                    <div class="h-2 bg-gray-800 rounded-full mb-2">
+                        <div class="h-2 bg-neon-blue rounded-full" style="width: 98%"></div>
+                    </div>
+                    <p class="text-sm text-gray-300">Expert level</p>
+                </div>
+
+
+                <!-- Skill 7 -->
+                <div class="bg-black bg-opacity-70 rounded-lg p-6 text-center neon-border hover:glow transition">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-network-wired text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Multiplayer</h3>
+                    <div class="h-2 bg-gray-800 rounded-full mb-2">
+                        <div class="h-2 bg-neon-blue rounded-full" style="width: 80%"></div>
+                    </div>
+                    <p class="text-sm text-gray-300">Photon, Mirror, Unreal</p>
+                </div>
+
+
+                <!-- Skill 9 -->
+                <div class="bg-black bg-opacity-70 rounded-lg p-6 text-center neon-border hover:glow transition">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-robot text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">AI Programming</h3>
+                    <div class="h-2 bg-gray-800 rounded-full mb-2">
+                        <div class="h-2 bg-neon-blue rounded-full" style="width: 82%"></div>
+                    </div>
+                    <p class="text-sm text-gray-300">Behavior Trees, Utility AI</p>
+                </div>
+
+                <!-- Skill 10 -->
+                <div class="bg-black bg-opacity-70 rounded-lg p-6 text-center neon-border hover:glow transition">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-tools text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Tool Development</h3>
+                    <div class="h-2 bg-gray-800 rounded-full mb-2">
+                        <div class="h-2 bg-neon-blue rounded-full" style="width: 70%"></div>
+                    </div>
+                    <p class="text-sm text-gray-300">Editor Extensions</p>
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+                    <h2 class="text-4xl font-bold mb-6 neon-text">ABOUT ME</h2>
+                    <div class="cyber-line w-full my-6"></div>
+                    <p class="text-lg mb-6">I'm Burak Yildirim, a passionate game developer with over 2+ years of
+                        experience creating immersive digital experiences. My journey began when I modded my first game
+                        at age 17, and since then I've been obsessed with the magic of interactive storytelling.</p>
+
+                    <p class="text-lg mb-6">I specialize in gameplay programming and system architecture, with a strong
+                        focus on creating responsive, engaging mechanics that delight players. My approach combines
+                        technical excellence with creative vision to build worlds that feel alive.</p>
+
+                    <div class="terminal bg-gray-900 p-6 rounded-lg neon-border mb-6">
+                        <div class="flex space-x-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-green-400">
+                            <p class="mb-2">> burak.currentLocation</p>
+                            <p class="mb-2 text-white">"Ankara, Turkey"</p>
+                            <p class="mb-2">> burak.education</p>
+                            <p class="mb-2 text-white">"BSc Computer Science - Ostim Technical University"</p>
+                            <p class="mb-2">> burak.experience</p>
+                            <p class="mb-2 text-white">"2+ years in game development"</p>
+                            <p class="mb-2">> burak.skills</p>
+                            <p class="mb-2 text-white">["Unreal", "C++", "Multiplayer", "AI"]</p>
+                            <p class="mb-2">> burak.interests</p>
+                            <p class="mb-2 text-white">["Procedural Generation", "Emergent Gameplay"]
+                            </p>
+                            <p class="text-green-400">> <span class="terminal-cursor">_</span></p>
+                        </div>
+                    </div>
+
+                    <a href="Screenshot_10.png" download
+                        class="neon-button inline-block px-6 py-3 rounded-full bg-transparent neon-border text-white font-bold">
+                        DOWNLOAD N wrod pass <i class="fas fa-download ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="lg:w-1/2 relative">
+                    <div class="neon-border rounded-lg overflow-hidden glow">
+                        <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Burak Yildirim at work" class="w-full h-auto">
+                    </div>
+
+                    <div
+                        class="absolute -bottom-6 -left-6 w-32 h-32 rounded-full bg-neon-pink bg-opacity-20 blur-xl -z-10">
+                    </div>
+                    <div
+                        class="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-neon-blue bg-opacity-20 blur-xl -z-10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-black bg-opacity-50"
+        style="background-image: url('Vice_City_06.jpg'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover;">
+        >
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-4 neon-text text-center">GET IN TOUCH</h2>
+            <p class="text-xl text-center mb-16 max-w-3xl mx-auto">Have a project in mind or want to discuss game
+                development? Reach out and let's create something amazing together.</p>
+
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-2">Your Name</label>
+                                <input type="text" id="name"
+                                    class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                                    placeholder="Enter your name">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2">Email Address</label>
+                                <input type="email" id="email"
+                                    class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                                    placeholder="Enter your email">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium mb-2">Subject</label>
+                            <input type="text" id="subject"
+                                class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                                placeholder="What's this about?">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium mb-2">Message</label>
+                            <textarea id="message" rows="5"
+                                class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                                placeholder="Tell me about your project"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="neon-button w-full px-6 py-4 rounded-lg bg-neon-blue bg-opacity-20 text-white font-bold hover:bg-opacity-30 transition">
+                            SEND MESSAGE <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="lg:w-1/2">
+                    <div class="bg-gray-900 bg-opacity-70 rounded-lg p-8 neon-border h-full">
+                        <h3 class="text-2xl font-bold mb-6 neon-text">CONTACT INFO</h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-neon-blue bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-neon-blue"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Email</h4>
+                                    <a href="mailto:contact@burakyildirim.dev"
+                                        class="text-neon-blue hover:underline">burak23369@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-neon-blue bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-neon-blue"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Location</h4>
+                                    <p>Ankara, Turkey</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-neon-blue bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-globe text-neon-blue"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Social Media</h4>
+                                    <div class="flex space-x-4 mt-2">
+
+                                        <a href="https://www.linkedin.com/in/burak-yildirim-026a16270/"
+                                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-neon-blue hover:text-black transition">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                        <a href="https://github.com/Bur4ak"
+                                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-neon-blue hover:text-black transition">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                        <a href="https://www.instagram.com/bur_.4k/"
+                                            class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-neon-blue hover:text-black transition">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-neon-blue bg-opacity-20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-gamepad text-neon-blue"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Game Platforms</h4>
+                                    <div class="flex flex-wrap gap-2 mt-2">
+                                        <span class="px-3 py-1 bg-gray-800 rounded-full text-xs">Steam</span>
+                                        <span class="px-3 py-1 bg-gray-800 rounded-full text-xs">Epic Games</span>
+                                        <span class="px-3 py-1 bg-gray-800 rounded-full text-xs">Only PC</span>
+
+                                        <!-- <span class="px-3 py-1 bg-gray-800 rounded-full text-xs">PlayStation</span>
+                                        <span class="px-3 py-1 bg-gray-800 rounded-full text-xs">Xbox</span>
+                                        <span class="px-3 py-1 bg-gray-800 rounded-full text-xs">App Store</span>
+                                        <span class="px-3 py-1 bg-gray-800 rounded-full text-xs">Google Play</span>
+                                    </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black bg-opacity-90">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-6 md:mb-0">
+                    <div class="w-8 h-8 rounded-full neon-border glow flex items-center justify-center">
+                        <img src="ChatGPT Image Apr 5, 2025, 03_19_21 AM.png" alt="Burak Yıldırım"
+                            class="w-full h-full object-cover" style="border-radius: 100%;">
+                    </div>
+                    <span class="text-lg neon-text">BURAK YILDIRIM</span>
+                </div>
+
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <a href="#home" class="hover:text-neon-blue transition">Home</a>
+                    <a href="#projects" class="hover:text-neon-blue transition">Projects</a>
+                    <a href="#skills" class="hover:text-neon-blue transition">Skills</a>
+                    <a href="#about" class="hover:text-neon-blue transition">About</a>
+                    <a href="#contact" class="hover:text-neon-blue transition">Contact</a>
+                </div>
+
+                <div class="flex space-x-4">
+
+                    <a href="https://www.linkedin.com/in/burak-yildirim-026a16270/"
+                        class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-neon-blue hover:text-black transition">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/Bur4ak"
+                        class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-neon-blue hover:text-black transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://bur-4k.itch.io/"
+                        class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-neon-blue hover:text-black transition">
+                        <i class="fab fa-itch-io"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="cyber-line w-full my-8"></div>
+
+            <div class="text-center text-gray-500 text-sm">
+                <p>&copy; 2025 Burak Yıldırım. All rights reserved. Crafted with <span class="text-neon-pink">♥</span>
+                    in Ankara.</p>
+                <p class="mt-2">Made for gamers, by a gamer.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-black bg-opacity-70 neon-border flex items-center justify-center text-white opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Terminal typing effect
+        const terminalText = [
+            "> burak.currentProject",
+            '"Hyper Realistic Horror Game"',
+            "> burak.status",
+            '"Working on 2 projects"',
+            "> burak.availability",
+            '"Q3 2025 - 2 slots remaining"',
+            "> _"
+        ];
+
+        let currentLine = 0;
+        const terminal = document.querySelector('.terminal .font-mono');
+
+        function typeTerminalText() {
+            if (currentLine < terminalText.length) {
+                const line = document.createElement('p');
+                line.className = 'mb-2';
+
+                if (currentLine % 2 === 0) {
+                    line.classList.add('text-green-400');
+                } else {
+                    line.classList.add('text-white');
+                }
+
+                terminal.appendChild(line);
+
+                let charIndex = 0;
+                const typingInterval = setInterval(() => {
+                    if (charIndex < terminalText[currentLine].length) {
+                        line.textContent += terminalText[currentLine].charAt(charIndex);
+                        charIndex++;
+                    } else {
+                        clearInterval(typingInterval);
+                        currentLine++;
+                        setTimeout(typeTerminalText, currentLine === terminalText.length - 1 ? 0 : 500);
+                    }
+                }, 30);
+            }
+        }
+
+        // Start typing after a delay
+        setTimeout(typeTerminalText, 2000);
+
+        // Particle.js effect
+        // Note: In a real implementation, you would load the particles.js library
+        // This is a placeholder to simulate the effect
+        const particlesContainer = document.getElementById('particles-js');
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'absolute rounded-full bg-neon-blue';
+
+            // Random properties
+            const size = Math.random() * 3;
+            const posX = Math.random() * window.innerWidth;
+            const posY = Math.random() * window.innerHeight;
+            const opacity = Math.random() * 0.5;
+            const animationDuration = 5 + Math.random() * 10;
+
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}px`;
+            particle.style.top = `${posY}px`;
+            particle.style.opacity = opacity;
+            particle.style.animation = `float ${animationDuration}s linear infinite`;
+
+            particlesContainer.appendChild(particle);
+
+            // Remove particle after animation completes
+            setTimeout(() => {
+                particle.remove();
+            }, animationDuration * 1000);
+        }
+
+        // Create initial particles
+        for (let i = 0; i < 50; i++) {
+            createParticle();
+        }
+
+        // Add new particles periodically
+        setInterval(createParticle, 500);
+
+        // Add floating animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes float {
+                0% {
+                    transform: translateY(0) translateX(0);
+                    opacity: 0;
+                }
+                50% {
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: translateY(-100vh) translateX(20px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        // Video oynatma ve durdurma işlevi
+        let video = document.getElementById('background-video');
+        let videoHeight = video.offsetHeight; // Video yüksekliği
+
+        window.addEventListener('scroll', function () {
+            // Sayfa kaydırma miktarını hesapla
+            let scrollPosition = window.scrollY;
+            let maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+            // Videoyu kaydırma oranına göre ilerlet
+            let progress = (scrollPosition / maxScroll) * video.duration;
+
+            video.currentTime = progress; // Videonun mevcut zamanını ayarlıyoruz
+        });
+
+
+        //-------------------------------------------------------------------------------
+
+
+
+
+    </script>
+</body>
+
+</html>
