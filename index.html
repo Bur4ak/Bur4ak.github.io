@@ -130,6 +130,13 @@
         .cyber-line {
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+
+
+
+
+
+
+
         }
     </style>
 </head>
@@ -137,6 +144,12 @@
 <body class="pixel-grid">
     <!-- Floating Particles Background -->
     <div id="particles-js" class="fixed inset-0 -z-10 opacity-20"></div>
+
+    <audio id="myAudio">
+        <source src="roblox-death-sound_ytkBL7X.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
 
 
 
@@ -804,28 +817,28 @@
         document.head.appendChild(style);
 
 
-        // Video oynatma ve durdurma işlevi
-        let video = document.getElementById('background-video');
-        let videoHeight = video.offsetHeight; // Video yüksekliği
 
-        window.addEventListener('scroll', function () {
-            // Sayfa kaydırma miktarını hesapla
-            let scrollPosition = window.scrollY;
-            let maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        //-------------------------------------------------------------------------------
 
-            // Videoyu kaydırma oranına göre ilerlet
-            let progress = (scrollPosition / maxScroll) * video.duration;
-
-            video.currentTime = progress; // Videonun mevcut zamanını ayarlıyoruz
+        // Sayfanın tamamında herhangi bir yere tıklama olayı dinle
+        document.body.addEventListener('click', function () {
+            var audio = document.getElementById("myAudio");
+            audio.play().catch(function (error) {
+                console.log("Ses çalma hatası:", error);
+            });
         });
 
 
-        //-------------------------------------------------------------------------------
+
+
+
+
 
 
 
 
     </script>
+
 </body>
 
 </html>
